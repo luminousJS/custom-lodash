@@ -7,6 +7,10 @@ const head = arr => arr[0];
 
 const initial = arr => arr.splice(0, arr.length - 1);
 
+const tail = arr => arr.splice(1, arr.length - 1);
+
+const uniq = arr => [...new Set([...arr])];
+
 const last = arr => arr[arr.length - 1];
 
 const join = (arr, sep) => arr.join(sep);
@@ -21,79 +25,37 @@ const nth = (arr, num) => num >= 0 ? arr[num] : arr[arr.length + num];
 
 const lastIndexOf = (arr, val) => arr.lastIndexOf(val);
 
-const difference = (arr1, arr2) => {
-    let newArr = [];
+const slice = (arr, start, end) => arr.slice(start, end);
 
-    for (item of arr1) {
-        if (!~arr2.findIndex(elem => elem === item)) newArr.push(item);
-    }
+const zipped = (...arrays) => arrays;
 
-    return newArr;
-}
+const drop = (arr, quantity = 1) => arr.splice(quantity, arr.length);
 
-const chunk = (arr, length) => {
-    let newArr = [];
+const dropRight = (arr, quantity = 1) => arr.splice(0, arr.length - quantity);
 
-    while (arr.length) {
-        newArr.push(arr.splice(0, length));
-    }
+const intersection = (...arrays) => arrays.reduce((acc, curr) => acc.filter(item => curr.includes(item)));
 
-    return newArr;
-}
+const difference = (arr1, arr2) => arr1.filter(item => !arr2.includes(item));
 
-const drop = (arr, quantity) => {
-    arr.splice(0, quantity);
-    return arr;
-}
+const pull = (arr, ...values) => difference(arr, values);
 
-const pull = (arr, ...values) => {
-    return arr.filter(item => {
-        for (elem of values) {
-            if (elem === item) return false;
-        }
-        return true;
-    })
-}
+const pullAll = (arr, values) => pull(arr, ...values);
 
-const remove = (arr, func) => {
-    return difference(arr, arr.filter(func));
-}
+const remove = (arr, func) => difference(arr, arr.filter(func));
 
-const take = (arr, quantity) => {
-    return arr.splice(0, quantity);
-}
+const take = (arr, quantity) => arr.splice(0, quantity);
 
-const union = (...arrays) => {
-    let resArray = [];
+const without = (arr, ...values) => arr.filter(item => !values.includes(item));
 
-    for (elem of [].concat(...arrays)) {
-        if (!resArray.includes(elem)) resArray.push(elem);
-    }
+const union = (...arrays) => [...new Set([].concat(...arrays))];
 
-    return resArray;
-}
+const chunk = (arr, length) => [...new Array(Math.ceil(arr.length / length))].map(item => arr.splice(0, length));
 
-const flatten = arr => {
-    let newArr = [];
+const flatten = arr => arr.reduce((acc, curr) => Array.isArray(curr) ? [...acc, ...curr] : [...acc, curr], []);
 
-    for (elem of arr) {
-        Array.isArray(elem) ? newArr.push(...elem) : newArr.push(elem);
-    }
+const fromPairs = arr => arr.reduce((acc, curr) => ({ ...acc, [curr[0]]: curr[1] }), {});
 
-    return newArr;
-}
-
-const without = (arr, ...values) => {
-    return arr.filter(item => !values.includes(item));
-}
-
-const fromPairs = arr => {
-    let obj = {};
-
-    arr.forEach(item => { obj[item[0]] = item[1] });
-
-    return obj;
-}
+const sortedIndex = (arr, num) => !~arr.findIndex(el => el >= num) ? arr.length : arr.findIndex(el => el >= num);
 
 /*const flattenDeep = arr => {
     let newArr = [];
