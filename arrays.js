@@ -57,6 +57,8 @@ const fromPairs = arr => arr.reduce((acc, curr) => ({ ...acc, [curr[0]]: curr[1]
 
 const sortedIndex = (arr, num) => !~arr.findIndex(el => el >= num) ? arr.length : arr.findIndex(el => el >= num);
 
+const xor = (...arrays) => arrays.reduce((acc, curr) => [...acc.filter(el => !curr.includes(el)), ...curr.filter(el => !acc.includes(el))]);
+
 /*const flattenDeep = arr => {
     let newArr = [];
 
@@ -69,14 +71,4 @@ const sortedIndex = (arr, num) => !~arr.findIndex(el => el >= num) ? arr.length 
     } else {
         return newArr;
     };
-}*/
-
-/*const xor = (...arrays) => {
-    let resArray = [];
-
-    for (elem of [].concat(...arrays)) {
-        if (!resArray.includes(elem)) resArray.push(elem);
-    }
-
-    return resArray;
 }*/
